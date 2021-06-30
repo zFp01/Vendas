@@ -1,0 +1,81 @@
+escolha = 0 #Oque ela quer fazer
+numero = 1 #Número do Produto
+tabela = {} #Tabela de preços dos produtos
+qprodutos = 0 #Quantos produtor comprou
+total = 0 #Quanto ela gastou
+num = 0 #Indice da tabela
+attganhos = 0 #Atualizando os Ganhos
+numld = 1 #Lucro no Primeiro dia para a função 4
+attganhoss = 0 #Atualizando os ganhos para a função 4
+
+print('\033[36m-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-\033[m\n\033[35m                  Olá Márcia!\033[m')
+print('''\033[36m-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-\033[m''')
+
+while True:
+    print('''\nDigite 1 para - Soma das compras do mercado
+Digite 2 para - Calcular o Lucro/Prejuízo 
+Digite 3 para - Metas de vendas
+Digite 4 para - Lucro dos dias
+Digite 5 para - Finalizar o Programa!''')
+    escolha = int(input('Oque a senhora deseja? '))
+    while escolha <= 0 or escolha >= 6:
+        escolha = int(input('Escolha Inválida!\nOque a senhora deseja? '))
+    if escolha == 1:
+        meta = float(input('Quanto que era para a senhora gastar no mercado? R$'))
+        while True:
+            produto = input(f'\nDigite aqui o {numero}° produto que você comprou no mercado: ').strip().upper().title()
+            if produto == '.':
+                break
+            preco = float(input('Digite agora o preço desse produto: R$'))
+            quantp = int(input('Quantos desse produtos você comprou?'))
+            print('''                 |\n\033[4;34m SE AS COMPRAS ACABOU DIGITE "."(Ponto)\033[m''')
+            numero += 1
+            qprodutos += 1
+            total += (preco*quantp)
+        print(f'Você comprou {qprodutos} produtos e a soma desses produtos deu:R${total:.2f} Reais')
+        if meta-total > 0:
+            print(f'\033[4;33mVocê tinha que gastar R${meta:.2f} Reais e gastou R${total:.2f} Reais. Sobrou R${meta-total:.2f} Reais\033[m')
+        else:
+            print(f'\033[4;33mVocê tinha que gastar R${meta:.2f} Reais e gastou R${total:.2f} Reais. Você gastou R${meta-total:.2f} Reais a mais!\033[m')
+    if escolha == 2:
+        mercado = float(input('Quanto que a senhora gastou de mercado esse mês? R$'))
+        while True:
+            comida = str(input('Qual é o nome do lanche ou salgado? ')).strip().title()
+            if comida == '.':
+                break
+            precoc = float(input(f'Você vende o {comida} por quanto? R$'))
+            quant = int(input(f'Quantos {comida} você fez? ')) #Quantos desse lanche ela fez
+            quatvend = int(input(f'Quantos {comida} você vendeu? ')) #Quantos desse lanche ela vendeu   
+            tabela[num] = [comida, precoc, quant, quatvend]
+            ganhos = tabela[num][1]*tabela[num][3]
+            attganhos += ganhos
+            ldm = attganhos*30 #ldm == Renda por mês
+            num += 1
+            print('''                 |\n\033[4;34m SE ACABOU DIGITE "."(Ponto)\033[m''')
+            print()
+        print(f'Você ganhou hoje R${attganhos:.2f} reais. Ganhando em média R${attganhos:.2f} reais por dia.\nEm 1 mês você faz R${ldm:.2f} reais.')
+        if ldm-mercado >= 0:
+            print(f'\033[4;33mVocê gastou esse mês R${mercado:.2f} reais e se faturar no mínimo R${ldm:.2f} reais por mês você ficará com o lucro de R${ldm-mercado:.2f} reais por mês\033[m')
+        else:
+            print(f'\033[4;33mVocê vai ter que aumentar o número da sua venda porque está no prejuízo de R${mercado-ldm:.2f} reais.\033[m')
+    if escolha == 3:
+        pretensao = float(input('Quanto você quer ganhar nesse mês? '))
+        med = float(input('Qual a média de preço por produto que você vende? '))
+        metapordia = (pretensao/med)/30
+        print(f'\033[4;33mVocê vai ter que fazer {metapordia:.0f} vendas por dia para bater sua meta mensal!\033[m')
+    if escolha == 4:
+        mercadin = float(input('quanto você gastou no mercado esse mês? ')) #Mercadin == Quanto gastou no 
+        while True:    
+            lucrin = float(input(f'Quanto que você ganhou no {numld}° dia? ')) #lucrin == lucro de até um determinado dia
+            attganhoss += lucrin
+            numld += 1
+            print('''                 |\n\033[4;34m SE ACABOU DE CONTAR OS DIAS DIGITE "0"(ZERO)\033[m''')
+            if lucrin == 0:
+                break
+        if attganhoss > mercadin:    
+            print(f'\n\033[4;33mAté agora você ganhou R${attganhoss} reais e já superou o preço do mercado, que foi R${mercadin} reais.\nVocê está no lucro de R${attganhoss-mercadin} reais!\033[m')
+        else:
+            print(f'\n\033[4;33mAté agora você ganhou R${attganhoss} reais e ainda não superou o preço do mercado, que foi R${mercadin} reais.\nEstá faltando R${mercadin-attganhoss} reais para começar a lucrar!\033[m')
+    if escolha == 5:
+        break
+print('\033[4;36mPrograma Finalizado, Até a próxima Márcia!\033[m')
